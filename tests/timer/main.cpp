@@ -30,7 +30,7 @@ int main()
 
     azh::timer timer3;
 
-    for(int i=0;i<100000000;i++)
+    for(int i=0;i<100000;i++)
     {
         std::cout<<"";
     }
