@@ -1,8 +1,26 @@
-#pragma once
+#ifndef TIMER_THREAD_H
+#define TIMER_THREAD_H
 
-class timer_thread
+#include <thread>
+#include <functional>
+
+namespace azh
 {
-    public:
-        timer_thread();
-        ~timer_thread();
-};
+    
+    class timer_thread
+    {
+        private:
+            std::thread* m_Thread;
+
+        public:
+            timer_thread();
+            ~timer_thread();
+
+            void start(const std::function<void(void)>& func,double s);
+
+        private:
+            ;
+    };
+}
+
+#endif
