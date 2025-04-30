@@ -18,7 +18,7 @@ void thread01()
 
 int main()
 {
-    azh::logger(LOGGER_FATAL)<<"Main Thread Start!";
+    azh::logger(LOGGER_FATAL,std::cout)<<"Main Thread Start!";
     // logger level default : warnning
     azh::logger()<<"Hello "<<"World!";
     azh::logger(LOGGER_WARNNING)<<"This is a warnning!";

@@ -44,22 +44,10 @@ namespace azh
     {
         private:
             bool shouldLogging;
+            std::ostream& out;
 
         public:
-            template<class T>
-            logger& operator<<(const T& type)
-            {
-                if(!shouldLogging)
-                {
-                    return *this;
-                }
-
-                LOGGER_STREAM<<type;
-
-                return *this;
-            }
-
-            logger(int level=LOGGER_INFO)
+            logger(int level=LOGGER_INFO,std::ostream& o=LOGGER_STREAM): out(o)
             {
                 if((LOGGER_LEVEL)level<GlobalLoggerLevel::getInstance().get())
                 {
@@ -73,7 +61,7 @@ namespace azh
                 printCurrentTime();
                 printLoggerHeader(level);
                 
-                LOGGER_STREAM<<" ";
+                out<<" ";
             }
 
             ~logger()
@@ -83,7 +71,7 @@ namespace azh
                     return;
                 }
 
-                LOGGER_STREAM<<"\n";
+                out<<"\n";
 
                 Logger_Mutex.unlock();
             }
@@ -99,34 +87,47 @@ namespace azh
             static void setGlobalLevel(const LOGGER_LEVEL& level) { GlobalLoggerLevel::getInstance().set(level); }
             static void setGlobalLevel(int level) { GlobalLoggerLevel::getInstance().set((LOGGER_LEVEL)level); }
 
+            template<class T>
+            logger& operator<<(const T& type)
+            {
+                if(!shouldLogging)
+                {
+                    return *this;
+                }
+
+                out<<type;
+
+                return *this;
+            }
+
         private:
             void printLoggerHeader(const LOGGER_LEVEL& level) { printLoggerHeader(((int)level)); }
             void printLoggerHeader(int level)
             {
-                LOGGER_STREAM<<"[";
+                out<<"[";
 
                 switch (level)
                 {
                 case LOGGER_WARNNING:
-                    LOGGER_STREAM<<"WARNNING";
+                    out<<"WARNNING";
                     break;
                 
                 case LOGGER_INFO:
-                    LOGGER_STREAM<<"  INFO  ";
+                    out<<"  INFO  ";
                     break;
 
                 case LOGGER_ERROR:
-                    LOGGER_STREAM<<"  ERROR ";
+                    out<<"  ERROR ";
                     break;
 
                 case LOGGER_FATAL:
-                    LOGGER_STREAM<<"  FATAL ";
+                    out<<"  FATAL ";
                     break;
 
                 default:
                     break;
                 }
-                LOGGER_STREAM<<"]";
+                out<<"]";
             }
 
             void printCurrentTime()
@@ -135,7 +136,7 @@ namespace azh
                 time(&now);
                 tm p=*localtime(&now);
 
-                LOGGER_STREAM<<"["<<
+                out<<"["<<
                     p.tm_year + 1900                        <<"-"<<
                     (p.tm_mon + 1)/10<<(p.tm_mon + 1)%10    <<"-"<<
                     p.tm_mday/10<<p.tm_mday%10              <<" "<<
