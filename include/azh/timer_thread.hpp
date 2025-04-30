@@ -1,5 +1,4 @@
-#ifndef TIMER_THREAD_H
-#define TIMER_THREAD_H
+#pragma once
 
 #include <thread>
 #include <functional>
@@ -22,5 +21,3 @@ namespace azh
             ;
     };
 }
-
-#endif

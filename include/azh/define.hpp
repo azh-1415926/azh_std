@@ -1,5 +1,4 @@
-#ifndef DEFINE_H
-#define DEFINE_H
+#pragma once
 
 #define SINGLETONE(Name,Type) \
 class Name \
@@ -16,5 +15,3 @@ class Name \
         explicit Name() { } \
         Type m_Instance; \
 };
-
-#endif

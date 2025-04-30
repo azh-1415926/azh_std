@@ -1,5 +1,4 @@
-#ifndef TIMER_H
-#define TIMER_H
+#pragma once
 
 #include <chrono>
 
@@ -43,5 +42,3 @@ namespace azh
             double operator-(const timer& t) { duration_millis duration=m_Start-t.m_Start; return duration.count(); }
     };
 }
-
-#endif
