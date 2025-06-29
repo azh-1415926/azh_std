@@ -1,6 +1,7 @@
-# cmake_minimum_required(VERSION 2.8.0)
 cmake_minimum_required(VERSION 3.6...3.14 FATAL_ERROR)
 cmake_policy(VERSION 3.6...3.14)
+
+project(azh_std)
 
 # 从 version.hpp 中获取版本信息
 file(READ "include/azh/version.hpp" AZH_VERSION_FILE)
